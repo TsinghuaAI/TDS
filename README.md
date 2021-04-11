@@ -58,3 +58,15 @@
 # Examples
 
 More examples like using TDS for GPT-2 and T5 can refer to [CPM-Pretrain](https://github.com/TsinghuaAI/CPM-Pretrain).
+
+# Citation
+
+If you use the code, please cite the following paper:
+
+```[latex]
+@article{cpm-v1,
+  title={CPM: A Large-scale Generative Chinese Pre-trained Language Model},
+  author={Zhang, Zhengyan and Han, Xu, and Zhou, Hao, and Ke, Pei, and Gu, Yuxian and Ye, Deming and Qin, Yujia and Su, Yusheng and Ji, Haozhe and Guan, Jian and Qi, Fanchao and Wang, Xiaozhi and Zheng, Yanan and Zeng, Guoyang and Cao, Huanqi and Chen, Shengqi and Li, Daixuan and Sun, Zhenbo and Liu, Zhiyuan and Huang, Minlie and Han, Wentao and Tang, Jie and Li, Juanzi and Sun, Maosong},
+  year={2020}
+}
+```
