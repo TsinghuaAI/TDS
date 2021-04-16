@@ -1,23 +1,23 @@
 # TDS
 
-[Release note](doc/release-note.md)|[中文文档](doc/readme-cn.md)
+[版本更新记录](release-note.md)|[English Document](../README.md)
 
-## Introduction
+## 介绍
 
-*   Tsinghua/Temporary DeepSpeed (TDS) is a  plug-in of Microsoft DeepSpeed to fix the bug of the DeepSpeed PipelineEngine. 
+*   Tsinghua/Temporary DeepSpeed (TDS) 是Microsoft DeepSpeed的插件，修复了DeepSpeed PipelineEngine的实现问题。 
 
-*   Although DeepSpeed provides interfaces to support pipeline-parallel training. There are still some bugs and hack implementation in its code, especially the code to send tensors between different stages.  We thus reimplement the PipelineEngine of DeepSpeed in TDS.
+*  尽管DeepSpeed提供了支持流水线并行训练的接口。它的代码中仍然存在一些错误和hack实现，尤其是在不同流水阶段之间发送张量的代码。因此，我们在TDS中重新实现了DeepSpeed的PipelineEngine，并采用适配器模式简单封装了其他的DeepSpeed接口。
 
+## 如何使用TDS
 
-## How to use TDS
+1. 使用的第一步需要安装DeepSpeed。如何安装DeepSpeed可以参考
+[DeepSpeed Installation](https://github.com/microsoft/DeepSpeed#installation).
 
-1. The first step is to install DeepSpeed. How to install DeepSpeed can refer to [DeepSpeed Installation](https://github.com/microsoft/DeepSpeed#installation).
+1. 将文件夹"tds"复制到您的项目中，并且将您项目中所有的"import deepspeed"改为"import tds as deepspeed"。
 
-2. Copy the folder "tds" into your project, and use "import tds as deepspeed" instead of "import deepspeed" in your code.
+2. 如果您要使用流水并行来加速训练，您需要额外添加一些代码让你的模型知道一些前向与后向计算中的设置细节。这些设置包括所有的张量类型（包括输入数据和隐层状态），这些张量是否需要保存梯度，以及是否需要在GPU上划分这些张量进行存储以节省显存。我们以训练GPT-2为例来解释使用TDS的一些微小变化，详细代码可从以下网址找到[GPT-2](https://github.com/microsoft/DeepSpeedExamples/blob/master/Megatron-LM-v1.1.5-3D_parallelism/pretrain_gpt2.py).
 
-3. If you want to use pipeline-parallel training, you must add the code to let your model know some essential settings for its forward and backward operations. These settings consist of tensor (including both input data and hidden states) types, whether these tensors need to save gradients, and whether these tensors need to be partitioned across GPUs to save memory. We take training GPT-2 as an example, the detailed code can be found from [GPT-2](https://github.com/microsoft/DeepSpeedExamples/blob/master/Megatron-LM-v1.1.5-3D_parallelism/pretrain_gpt2.py).
-
-    *   The code of using DeepSpeed
+    *  使用 DeepSpeed 原有代码
     
     ```python
     def model_provider():
@@ -33,7 +33,7 @@
     ```
 
 
-    *   The code of using TDS
+    *   使用 TDS 插件之后
 
     ```python
     def model_provider():
@@ -55,17 +55,17 @@
     ```        
 
 
-4. All other operations can directly follow [DeepSpeed](https://github.com/microsoft/DeepSpeed) and [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples).
+1. 其他各种模型实现与并行加速的操作可以直接参照[DeepSpeed](https://github.com/microsoft/DeepSpeed) and [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples)。
 
 
 
-## Examples
+## 样例
 
-More examples like using TDS for GPT-2 and T5 can refer to [CPM-Pretrain](https://github.com/TsinghuaAI/CPM-Pretrain).
+我们在[CPM-Pretrain](https://github.com/TsinghuaAI/CPM-Pretrain)中详细给出了如何使用TDS训练GPT-2和T5。
 
-## Citation
+## 引用
 
-If you use the code, please cite the following paper:
+如果您使用了我们的代码，请您引用下面的文章。
 
 ```[latex]
 @article{cpm-v1,
